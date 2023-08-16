@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Table, Modal, Input, DatePicker } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -11,17 +11,63 @@ const DataTable = () => {
     price: "",
     date: null,
   });
-  const [dataSource, setDataSource] = useState([
-    {
-      name: "John",
-      price: "2000",
-      date: "08-08-2023",
-    },
-  ]);
+  const [dataSource, setDataSource] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [filterDate, setFilterDate] = useState(moment()); // Default to current date
-  const [filteredData, setFilteredData] = useState([]); // Store filtered records
-  const [isFilteredModalVisible, setIsFilteredModalVisible] = useState(false); // For the filtered modal
+  const [filterDate, setFilterDate] = useState(moment());
+  const [filteredData, setFilteredData] = useState([]);
+  const [isFilteredModalVisible, setIsFilteredModalVisible] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    fetch("http://localhost:8000/dataSource")
+      .then((response) => response.json())
+      .then((data) => setDataSource(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  };
+
+  const saveData = (data) => {
+    fetch("http://localhost:8000/dataSource", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((savedData) => {
+        setDataSource((prev) => [...prev, savedData]);
+      })
+      .catch((error) => console.error("Error adding data:", error));
+  };
+
+  const updateData = (data) => {
+    fetch(`http://localhost:8000/dataSource/${data.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        setDataSource((prev) =>
+          prev.map((item) => (item.id === data.id ? data : item))
+        );
+      })
+      .catch((error) => console.error("Error updating data:", error));
+  };
+
+  const deleteData = (id) => {
+    fetch(`http://localhost:8000/dataSource/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        setDataSource((prev) => prev.filter((item) => item.id !== id));
+      })
+      .catch((error) => console.error("Error deleting data:", error));
+  };
 
   const columns = [
     { title: "Name", dataIndex: "name" },
@@ -37,7 +83,7 @@ const DataTable = () => {
         <>
           <EditOutlined onClick={() => onEditData(record)} />
           <DeleteOutlined
-            onClick={() => onDeleteData(record)}
+            onClick={() => onDeleteData(record.id)}
             style={{ color: "red", marginLeft: 12 }}
           />
         </>
@@ -46,7 +92,11 @@ const DataTable = () => {
   ];
 
   const handleInputChange = (key, value) => {
-    setNewData((prevData) => ({ ...prevData, [key]: value }));
+    if (isEditing) {
+      setEditingData((prevData) => ({ ...prevData, [key]: value }));
+    } else {
+      setNewData((prevData) => ({ ...prevData, [key]: value }));
+    }
   };
 
   const onAddData = () => {
@@ -54,56 +104,54 @@ const DataTable = () => {
       ? moment(newData.date).format("DD-MM-YYYY")
       : null;
     const newDataEntry = { ...newData, date: formattedDate };
-    setDataSource((prev) => [...prev, newDataEntry]);
+    saveData(newDataEntry);
     setNewData({ name: "", price: "", date: null });
     setIsAddModalVisible(false);
   };
 
-  const onDeleteData = (record) => {
+  const onDeleteData = (id) => {
     Modal.confirm({
       title: "Are you sure you want to delete this Data record?",
       okText: "Yes",
       okType: "danger",
       onOk: () => {
-        setDataSource((prev) => prev.filter((data) => data !== record));
+        deleteData(id);
       },
     });
   };
 
   const onEditData = (record) => {
     setIsEditing(true);
-    setEditingData(record);
-    setNewData({
+    setEditingData({
+      id: record.id,
       name: record.name,
       price: record.price,
-      date: moment(record.date, "DD-MM-YYYY"), // Convert date to moment object
+      date: moment(record.date, "DD-MM-YYYY"),
     });
-    setIsAddModalVisible(true); // Open the Add Budget modal for editing
+    setIsAddModalVisible(true);
   };
 
   const onSaveEdit = () => {
     const updatedData = {
       ...editingData,
-      name: newData.name,
-      price: newData.price,
-      date: newData.date ? moment(newData.date).format("DD-MM-YYYY") : null,
+      date: editingData.date
+        ? moment(editingData.date).format("DD-MM-YYYY")
+        : null,
     };
 
-    setDataSource((prev) =>
-      prev.map((data) => (data === editingData ? updatedData : data))
-    );
+    updateData(updatedData);
 
     setIsEditing(false);
     setEditingData(null);
     setNewData({ name: "", price: "", date: null });
-    setIsAddModalVisible(false); // Close the Add Budget modal after saving edit
+    setIsAddModalVisible(false);
   };
 
   const onCancelEdit = () => {
     setIsEditing(false);
     setEditingData(null);
     setNewData({ name: "", price: "", date: null });
-    setIsAddModalVisible(false); // Close the Add Budget modal on cancel
+    setIsAddModalVisible(false);
   };
 
   const handleDateChange = (date) => {
@@ -111,88 +159,99 @@ const DataTable = () => {
   };
 
   const filterRecords = () => {
-    // Filter the data based on the selected date
     const filteredData = dataSource.filter(
       (data) =>
         moment(data.date, "DD-MM-YYYY").format("DD-MM-YYYY") ===
         filterDate.format("DD-MM-YYYY")
     );
-    setFilteredData(filteredData); // Store filtered records
-    setIsFilteredModalVisible(true); // Show the filtered modal
+    setFilteredData(filteredData);
+    setIsFilteredModalVisible(true);
   };
 
   const clearFilteredRecords = () => {
-    setFilteredData([]); // Clear filtered records
-    setIsFilteredModalVisible(false); // Hide the filtered modal
+    setFilteredData([]);
+    setIsFilteredModalVisible(false);
   };
 
   return (
-    <div className="App">
+    <div className="DataTable-container">
+    <div className="DataContainer">
       <header className="App-header">
+        <div className="Filter-section">
+          <DatePicker
+            defaultValue={filterDate}
+            format="DD-MM-YYYY"
+            onChange={handleDateChange}
+            className="DatePicker"
+          />
+          <Button onClick={filterRecords} className="Filter-button">
+            Filter Records
+          </Button>
+        </div>
         <Button
           type="primary"
           onClick={() => {
             setIsAddModalVisible(true);
-            setNewData({ name: "", price: "", date: null }); // Reset new data values
+            setNewData({ name: "", price: "", date: null });
           }}
-          style={{ marginBottom: 16 }}
+          className="Button-add-budget"
         >
           Add Budget
         </Button>
-        <DatePicker
-          defaultValue={filterDate}
-          format="DD-MM-YYYY" // Specify the desired date format
-          onChange={handleDateChange}
-          style={{ marginRight: 16 }}
-        />
-        <Button onClick={filterRecords}>Filter Records</Button>
-        {isFilteredModalVisible && (
-          <Modal
-            title="Filtered Records"
-            visible={isFilteredModalVisible}
-            onCancel={clearFilteredRecords}
-            footer={[
-              <Button key="ok" onClick={clearFilteredRecords}>
-                OK
-              </Button>,
-            ]}
-          >
-            {filteredData.length > 0 ? (
-              <Table columns={columns} dataSource={filteredData} />
-            ) : (
-              <p>No record</p>
-            )}
-          </Modal>
-        )}
-        <Table columns={columns} dataSource={dataSource} />
+      </header>
+      {isFilteredModalVisible && (
         <Modal
-          title={isEditing ? "Edit Data" : "Add Budget"}
-          visible={isAddModalVisible}
-          onCancel={() => {
-            setIsAddModalVisible(false);
-            onCancelEdit(); // Call onCancelEdit when closing the modal
-          }}
-          onOk={isEditing ? onSaveEdit : onAddData}
-          okText={isEditing ? "Save" : "Add"}
+          title="Filtered Records"
+          visible={isFilteredModalVisible}
+          onCancel={clearFilteredRecords}
+          footer={[
+            <Button key="ok" onClick={clearFilteredRecords}>
+              OK
+            </Button>,
+          ]}
         >
+          {filteredData.length > 0 ? (
+            <Table columns={columns} dataSource={filteredData} />
+          ) : (
+            <p className="No-record-message">No record</p>
+          )}
+        </Modal>
+      )}
+      <Table
+        columns={columns}
+        dataSource={dataSource.slice().sort((a, b) =>
+          moment(a.date, "DD-MM-YYYY").isAfter(moment(b.date, "DD-MM-YYYY")) ? 1 : -1
+        )}
+        className="Table-container"
+      />
+      <Modal
+        title={isEditing ? "Edit Data" : "Add Budget"}
+        visible={isAddModalVisible}
+        onCancel={() => {
+          setIsAddModalVisible(false);
+          onCancelEdit();
+        }}
+        onOk={isEditing ? onSaveEdit : onAddData}
+        okText={isEditing ? "Save" : "Add"}
+      >
           <Input
             placeholder="Name"
-            value={newData.name}
+            value={isEditing ? editingData.name : newData.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
           />
           <Input
             placeholder="Price"
-            value={newData.price}
+            value={isEditing ? editingData.price : newData.price}
             onChange={(e) => handleInputChange("price", e.target.value)}
           />
-<DatePicker
-  picker="date"
-  value={newData.date ? moment(newData.date) : null}
-  onChange={(date) => handleInputChange("date", date)}
-  format="DD-MM-YYYY" // Specify the desired date format
-/>
+          <DatePicker
+            picker="date"
+            value={isEditing ? editingData.date : newData.date}
+            onChange={(date) => handleInputChange("date", date)}
+            format="DD-MM-YYYY"
+          />
         </Modal>
-      </header>
+      </div>
     </div>
   );
 };

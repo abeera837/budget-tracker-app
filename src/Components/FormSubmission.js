@@ -1,40 +1,40 @@
-import { Form, Button, Input} from "antd";
+import { Form, Button, Input } from "antd";
 import React from "react";
-
 
 const FormSubmission = () => {
 
-  return (
+    return (
+        <div className="formSubmission">
+            <Form
+                autoComplete="off"
+                labelCol={{ span: 15 }}
+                wrapperCol={{ span: 30 }}
+                onFinish={(values) => {
+                    console.log({ values });
+                }}
+                onFinishFailed={(error) => {
+                    console.log({ error });
+                }}
+            >
+                <Form.Item
+                    className="formItem"
+                    name="firstName"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Required Field",
+                        },
+                        { whitespace: true },
+                        { min: 2 },
+                    ]}
+                    hasFeedback
+                >
+                    <div className="inputContainer">
+                        <Input className="inputField" placeholder="First Name" />
+                    </div>
+                </Form.Item>
 
-    <div className="formSubmission">
-        <Form
-          autoComplete="off"
-          labelCol={{ span: 10 }}
-          wrapperCol={{ span: 10 }}
-          onFinish={(values) => {
-            console.log({ values });
-          }}
-          onFinishFailed={(error) => {
-            console.log({ error });
-          }}
-        >
-          <Form.Item
-            name="firstName"
-            
-            rules={[
-              {
-                required: true,
-                message: "Required Field",
-              },
-              { whitespace: true },
-              { min: 2 },
-            ]}
-            hasFeedback
-          >
-            <Input placeholder="First Name*" />
-          </Form.Item>
-
-          <Form.Item
+                <Form.Item
             name="lastName"
             
             rules={[
@@ -125,18 +125,14 @@ const FormSubmission = () => {
             <Input placeholder="Budget Limit*" />
           </Form.Item>
 
-
-
-          <Form.Item wrapperCol={{ span: 5 }}>
-            <Button block type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-    </div>
-
+                <Form.Item wrapperCol={{ offset: 5, span: 14 }}>
+                    <Button className="submitButton" block type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
     );
-  }
+}
 
- 
 export default FormSubmission;

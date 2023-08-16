@@ -1,14 +1,16 @@
 
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
+
+import React from "react";
 
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <h1>Budget Tracker</h1>      
-        </nav>     
-
-
+            <div className="logo">
+                <h1>Budget Tracker</h1>
+            </div>
+        </nav>
     );
-}
- 
+};
+
 export default Navbar;

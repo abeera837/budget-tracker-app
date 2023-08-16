@@ -15,47 +15,198 @@ code {
     monospace;
 }
 
-.navbar {
+/* Home.css */
+
+.home {
+  max-width: 400px;
+  margin: 0 auto;
   padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h4 {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* FormSubmission.css */
+
+
+.formSubmission {
+  max-width: 400px;
+  margin: 30px auto; /* Add margin to create a gap */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the form content horizontally */
+}
+
+.formItem {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.inputContainer {
+  width: 100%;
   display: flex;
   align-items: center;
-  max-width: 600px;
+}
+
+.label {
+  width: 100px;
+  margin-right: 10px;
+}
+
+.inputField {
+  flex: 1;
+}
+
+.errorMessage {
+  color: #f5222d;
+  margin-top: 5px;
+}
+
+.submitButton {
+  margin-top: 15px;
+}
+
+/* SignIn.css */
+
+.signIn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.signIn {
+  max-width: 400px;
+  width: 50%;
+  margin-top: 20px; /* Add margin to create a gap between navbar and form */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+/* Navbar.css */
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #f2f2f2; /* Light color for the logo text */
+}
+
+/* DataTable.css */
+
+
+.DataTable-container {
+  padding: 20px;
+}
+
+/* Define a new container class for the DataTable */
+.DataContainer {
+  max-width: 800px;
   margin: 0 auto;
-  border-bottom: 1px solid #f2f2f2;
-}
-.navbar h1 {
-  color: black;
-}
-.navbar .links {
-  margin-left: auto;
-}
-.navbar a {
-  margin-left: 16px;
-  text-decoration: none;
-  padding: 6px;
-}
-.navbar a:hover {
-  color: #f1356d;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+}
 
-.formSubmission button{
-background: blueviolet;
-color: #fff;
-width: 2px;
-padding: 2px;
-border-radius: 2px;
-cursor: pointer;
+.Button-add-budget {
+  background-color: black;
+  color: white;
+  border: none;
 }
-.content {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-   border-radius: 10px;
-    width: 600px;
-    height: 600px;
-    margin: 100px auto;
-    background: white;
-    position: relative;
-    padding: 2px 16px;
+
+.Filter-section {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
 }
+
+.DatePicker {
+  margin-right: 16px;
+}
+
+.Filter-button {
+  background-color: yellow;
+  border: none;
+}
+
+/* Style for the table */
+.Table-container {
+  margin-top: 20px;
+}
+
+/* Style for the filtered modal */
+.Filtered-modal {
+  text-align: center;
+}
+
+/* Style for the "No record" message */
+.No-record-message {
+  margin-top: 10px;
+  color: #888;
+}
+
 

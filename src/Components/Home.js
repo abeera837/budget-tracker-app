@@ -1,19 +1,14 @@
 import FormSubmission from "./FormSubmission";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     return ( 
         <div className="home">
             <h2>Sign Up</h2>
-            <h4>Already have an account</h4>    {/* todo: add link here add to home with formSubmssions*/}
+            <Link to="/signIn">Already have an account?</Link>
             <FormSubmission />
-        </div> 
 
-
-
-
-
-
-
+        </div>
     );
 }
  

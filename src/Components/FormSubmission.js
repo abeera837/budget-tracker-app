@@ -1,7 +1,33 @@
 import { Form, Button, Input } from "antd";
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const FormSubmission = () => {
+    const history = useHistory(); // Create a history object
+
+    const saveNewUser = (user) => {
+        // You would typically use an API call or database operation here
+        // For now, let's just log the new user data to the console
+        console.log("New user data:", user);
+    };
+
+    const onFinish = (values) => {
+        console.log("Received values of form: ", values);
+
+        const newUser = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            password: values.password,
+            budget: values.budget,
+        };
+
+        // Call the function to save the new user data
+        saveNewUser(newUser);
+
+        // Redirect to the sign-in page after registration
+        history.push("/signin");
+    };
 
     return (
         <div className="formSubmission">
@@ -9,9 +35,7 @@ const FormSubmission = () => {
                 autoComplete="off"
                 labelCol={{ span: 15 }}
                 wrapperCol={{ span: 30 }}
-                onFinish={(values) => {
-                    console.log({ values });
-                }}
+                onFinish={onFinish}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
@@ -35,95 +59,91 @@ const FormSubmission = () => {
                 </Form.Item>
 
                 <Form.Item
-            name="lastName"
-            
-            rules={[
-              {
-                required: true,
-                message:"Required Field",
-              },
-              { whitespace: true },
-              { min: 3 },
-            ]}
-            hasFeedback
-          >
-            <Input placeholder="Last Name*" />
-          </Form.Item>
+                    name="lastName"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Required Field",
+                        },
+                        { whitespace: true },
+                        { min: 3 },
+                    ]}
+                    hasFeedback
+                >
+                    <Input placeholder="Last Name*" />
+                </Form.Item>
 
-          <Form.Item
-            name="email"
-          
-            rules={[
-              {
-                required: true,
-                message: "Required Field",
-              },
-              { type: "email", message: "Please enter a valid email" },
-            ]}
-            hasFeedback
-          >
-            <Input placeholder="Email" />
-          </Form.Item>
+                <Form.Item
+                    name="email"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Required Field",
+                        },
+                        { type: "email", message: "Please enter a valid email" },
+                    ]}
+                    hasFeedback
+                >
+                    <Input placeholder="Email" />
+                </Form.Item>
 
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Required Field",
-              },
-              { min: 6 },
-              {
-                validator: (_, value) =>
-                  value 
-                    ? Promise.resolve()
-                    : Promise.reject("Password does not match criteria."),
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password placeholder="Password*" />
-          </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Required Field",
+                        },
+                        { min: 6 },
+                        {
+                            validator: (_, value) =>
+                                value
+                                    ? Promise.resolve()
+                                    : Promise.reject("Password does not match criteria."),
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input.Password placeholder="Password*" />
+                </Form.Item>
 
-          <Form.Item
-            name="confirmPassword"
-            dependencies={["password"]}
-            rules={[
-              {
-                required: true,
-                message: "Required Field",                
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {    /* see if passwords match */
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    "Try again"
-                  );
-                },
-              }),
-            ]}
-            hasFeedback
-          >
-            <Input.Password placeholder="Confirm your password" />
-          </Form.Item>
+                <Form.Item
+                    name="confirmPassword"
+                    dependencies={["password"]}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Required Field",
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue("password") === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject("Passwords do not match");
+                            },
+                        }),
+                    ]}
+                    hasFeedback
+                >
+                    <Input.Password placeholder="Confirm your password" />
+                </Form.Item>
 
-          <Form.Item
-            name="budgetLimit"
-            
-            rules={[
-              {
-                required: true,
-                message: "Required Field",
-              },
-              { whitespace: true },
-              { min: 1 },
-            ]}
-            hasFeedback
-          >
-            <Input placeholder="Budget Limit*" />
-          </Form.Item>
+                <Form.Item
+    name="budget"
+    rules={[
+        {
+            required: true,
+            message: "Required Field",
+        },
+        { whitespace: true },
+        { min: 1, message: "Please enter a valid budget" }, // Adjust the min value as needed
+    ]}
+    hasFeedback
+>
+    <Input placeholder="Budget*" />
+</Form.Item>
+
 
                 <Form.Item wrapperCol={{ offset: 5, span: 14 }}>
                     <Button className="submitButton" block type="primary" htmlType="submit">
@@ -133,6 +153,6 @@ const FormSubmission = () => {
             </Form>
         </div>
     );
-}
+};
 
 export default FormSubmission;

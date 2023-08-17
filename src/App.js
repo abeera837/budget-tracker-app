@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';//
-import Home from "./Components/Home";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Register from "./Components/Register";
 import Navbar from "./Components/Navbar";
-import Reporting from "./Components/Reporting";
+import ExpenseChart from "./Components/ExpenseChart";
 import DataTable from './Components/DataTable';
 import SignIn from "./Components/SignIn";
 
@@ -13,7 +13,7 @@ function App() {
       <div className="content">
         <Switch>
           <Route exact path="/">
-             <Home />
+             <Register />
           </Route>
            <Route path="/dashboard">           {/*to do create new names  */}
               <DataTable />
@@ -24,7 +24,7 @@ function App() {
           </Route>
 
           <Route path="/analytics">           {/*to do create new names  */}
-              <Reporting />
+              <ExpenseChart />
           </Route>
         </Switch>
       

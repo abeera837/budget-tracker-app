@@ -1,7 +1,7 @@
 import FormSubmission from "./FormSubmission";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Register = () => {
     return ( 
         <div className="home">
             <h2>Sign Up</h2>
@@ -12,4 +12,4 @@ const Home = () => {
     );
 }
  
-export default Home;        
+export default Register;        

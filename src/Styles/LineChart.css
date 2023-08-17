@@ -1,0 +1,12 @@
+
+/* LineChart.css */
+
+.linechart {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }

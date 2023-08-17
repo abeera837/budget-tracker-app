@@ -1,6 +1,7 @@
 import { Form, Button, Input } from "antd";
 import React from "react";
 import { useHistory } from "react-router-dom"; // Import the useHistory hook
+import "../Styles/SignIn.css";
 
 const SignIn = () => {
     const history = useHistory(); // Create a history object

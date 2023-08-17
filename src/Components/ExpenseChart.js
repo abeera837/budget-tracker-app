@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import LineChart from "./LineChart";
 import { UserData } from "./Data";
-import { Tabs } from "antd";
+import { Tabs, notification } from "antd";
+import "../Styles/ExpenseChart.css";
 
 const getChartData = (filteredUserData, budget) => {
   // Calculate cumulative total
@@ -38,7 +39,7 @@ const getChartData = (filteredUserData, budget) => {
       },
       {
         label: "Budget",
-        data: Array(filteredUserData.length).fill(budget),
+        data: Array(filteredUserData.length).fill(budget), // Use the provided budget value
         type: "line",
         borderColor: "red",
         borderWidth: 2,
@@ -85,7 +86,11 @@ const ExpenseChart = () => {
     return dataDate >= twelveMonthsAgo;
   });
 
-  const budget = 1400; // Fixed budget value
+  const budgetMonth = 1000; // Fixed budget value for the month
+  const budgetSixMonth = budgetMonth*6; // Fixed budget value for 6 months
+  const budgetYear = budgetMonth*12; // Fixed budget value for 6 months
+
+
 
   return (
     <div className="expensechart">
@@ -96,7 +101,7 @@ const ExpenseChart = () => {
             <div>
               <h2 className="left-corner">Last Month</h2>
               <div className="chart-container-wide">
-                <LineChart chartData={getChartData(filteredLastMonthUserData, budget)} />
+                <LineChart chartData={getChartData(filteredLastMonthUserData, budgetMonth)} />
               </div>
             </div>
           </Tabs.TabPane>
@@ -104,7 +109,7 @@ const ExpenseChart = () => {
             <div>
               <h2 className="left-corner">Last 6 Months</h2>
               <div className="chart-container-wide">
-                <LineChart chartData={getChartData(filteredLastSixMonthsUserData, budget)} />
+                <LineChart chartData={getChartData(filteredLastSixMonthsUserData, budgetSixMonth)} />
               </div>
             </div>
           </Tabs.TabPane>
@@ -112,7 +117,7 @@ const ExpenseChart = () => {
             <div>
               <h2 className="left-corner">Last 12 Months</h2>
               <div className="chart-container-wide">
-                <LineChart chartData={getChartData(filteredLastTwelveMonthsUserData, budget)} />
+                <LineChart chartData={getChartData(filteredLastTwelveMonthsUserData, budgetYear)} />
               </div>
             </div>
           </Tabs.TabPane>

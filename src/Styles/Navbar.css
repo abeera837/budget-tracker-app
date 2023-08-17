@@ -1,0 +1,29 @@
+
+/* Navbar.css */
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+
+  .logout{
+    display: flex;
+    align-items: right;
+    padding-left: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #f2f2f2; /* Light color for the logo text */
+  }
+  

@@ -1,0 +1,34 @@
+
+/* SignIn.css */
+
+.signIn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+  }
+  
+  .signIn {
+    max-width: 400px;
+    width: 50%;
+    margin-top: 20px; /* Add margin to create a gap between navbar and form */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .login-form {
+    width: 100%;
+  }
+  
+  .login-form-button {
+    width: 100%;
+  }

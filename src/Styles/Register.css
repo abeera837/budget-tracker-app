@@ -1,0 +1,31 @@
+/* Home.css */
+
+.home {
+    max-width: 400px;
+    margin: 40px auto 0; /* Added margin-top to increase the gap */
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+  
+h2 {
+    margin-bottom: 10px;
+    offset: 10px; /* This line seems to be a typo, you can remove it */
+    color: #333;
+}
+  
+h4 {
+    margin-bottom: 100px; /* You can adjust this margin as needed */
+    color: #666;
+}
+  
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+  
+a:hover {
+    text-decoration: underline;
+}

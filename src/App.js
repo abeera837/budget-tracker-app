@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Register from "./Components/Register";
+import Register from "./Pages/Register";
 import Navbar from "./Components/Navbar";
 import ExpenseChart from "./Components/ExpenseChart";
 import DataTable from './Components/DataTable';
-import SignIn from "./Components/SignIn";
+import SignIn from "./Pages/SignIn";
 
 function App() {
   return (

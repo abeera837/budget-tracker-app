@@ -1,0 +1,63 @@
+
+/* DataTable.css */
+
+
+.DataTable-container {
+    padding: 20px;
+  }
+  
+  /* Define a new container class for the DataTable */
+  .DataContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .App-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+  }
+  
+  .Button-add-budget {
+    background-color: black;
+    color: white;
+    border: none;
+  }
+ 
+  .Filter-section {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .DatePicker {
+    margin-right: 16px;
+  }
+  
+  .Filter-button {
+    background-color: yellow;
+    border: none;
+  }
+  
+  /* Style for the table */
+  .Table-container {
+    margin-top: 20px;
+  }
+  
+  /* Style for the filtered modal */
+  .Filtered-modal {
+    text-align: center;
+  }
+  
+  /* Style for the "No record" message */
+  .No-record-message {
+    margin-top: 10px;
+    color: #888;
+  }

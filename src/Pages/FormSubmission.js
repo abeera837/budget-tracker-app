@@ -7,10 +7,24 @@ const FormSubmission = () => {
     const history = useHistory(); // Create a history object
 
     const saveNewUser = (user) => {
-        
-        console.log("New user data:", user);
+        fetch("http://localhost:8001/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        })
+        .then((response) => response.json())
+        .then((savedUser) => {
+            console.log("New user data:", savedUser);
+            // Handle success, update state, show messages, etc.
+        })
+        .catch((error) => {
+            console.error("Error adding new user:", error);
+            // Handle error, show error messages, etc.
+        });
     };
-
+    
     const onFinish = (values) => {
         console.log("Received values of form: ", values);
 //TODO const { firstName, } = values;

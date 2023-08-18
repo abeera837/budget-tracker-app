@@ -42,8 +42,8 @@
   }
   
   .Filter-button {
-    background-color: yellow;
-    border: none;
+    background-color: rgb(184, 184, 20);
+    border: black solid transparent;
   }
   
   /* Style for the table */

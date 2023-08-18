@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"; 
-import { Button, Table, Modal, Input, DatePicker } from "antd";
+import { Button, Table, Modal, Input, DatePicker, Form } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Filtering from "./Filtering";
@@ -269,35 +269,19 @@ const DataTable = () => {
             placeholder="Name"
             value={isEditing ? editingData.name : newData.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
-            rules={[
-              {
-                  required: true,
-                  message: "Required Field",
-              },
-          ]}
+
           />
           <Input
             placeholder="Price"
             value={isEditing ? editingData.price : newData.price}
             onChange={(e) => handleInputChange("price", e.target.value)}
-            rules={[
-              {
-                  required: true,
-                  message: "Required Field",
-              },
-          ]}
+
           />
           <DatePicker
             picker="date"
             value={isEditing ? editingData.date : newData.date}
             onChange={(date) => handleInputChange("date", date)}
             format="DD-MM-YYYY"
-            rules={[
-              {
-                  required: true,
-                  message: "Required Field",
-              },
-          ]}
           />
         </Modal>
 
@@ -305,6 +289,7 @@ const DataTable = () => {
       </div>
     </div>
   );
-};
+  
 
+};
 export default DataTable;

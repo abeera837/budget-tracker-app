@@ -44,7 +44,7 @@ export const UserData = [
     {
       name: "Electronics",
       price: 400,
-      date: "24/08/2023",
+      date: "17/08/2023",
       id: 13,
     },
     {
@@ -71,5 +71,11 @@ export const UserData = [
       date: "28/12/2023",
       id: 17,
     },
+    {
+      name: "Summer Sale",
+      price: 180,
+      date: "15/07/2023",
+      id: 18,
+    }
   ];
   

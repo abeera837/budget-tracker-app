@@ -7,14 +7,13 @@ const FormSubmission = () => {
     const history = useHistory(); // Create a history object
 
     const saveNewUser = (user) => {
-        // You would typically use an API call or database operation here
-        // For now, let's just log the new user data to the console
+        
         console.log("New user data:", user);
     };
 
     const onFinish = (values) => {
         console.log("Received values of form: ", values);
-
+//TODO const { firstName, } = values;
         const newUser = {
             firstName: values.firstName,
             lastName: values.lastName,
@@ -95,7 +94,7 @@ const FormSubmission = () => {
                             required: true,
                             message: "Required Field",
                         },
-                        { min: 6 },
+                        { min: 3 },
                         {
                             validator: (_, value) =>
                                 value
@@ -131,19 +130,19 @@ const FormSubmission = () => {
                 </Form.Item>
 
                 <Form.Item
-    name="budget"
-    rules={[
-        {
-            required: true,
-            message: "Required Field",
-        },
-        { whitespace: true },
-        { min: 1, message: "Please enter a valid budget" }, // Adjust the min value as needed
-    ]}
-    hasFeedback
->
-    <Input placeholder="Budget*" />
-</Form.Item>
+                    name="budget"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Required Field",
+                        },
+                        { whitespace: true },
+                        { min: 1, message: "Please enter a valid budget" }, 
+                    ]}
+                    hasFeedback
+                >
+                    <Input placeholder="Budget*" />
+                </Form.Item>
 
 
                 <Form.Item wrapperCol={{ offset: 5, span: 14 }}>

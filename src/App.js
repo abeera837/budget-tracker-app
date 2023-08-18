@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Register from "./Pages/Register";
 import Navbar from "./Components/Navbar";
 import ExpenseChart from "./Components/ExpenseChart";
-import DataTable from './Components/DataTable';
+import Dashboard from './Components/Dashboard';
 import SignIn from "./Pages/SignIn";
 
 function App() {
@@ -15,15 +15,13 @@ function App() {
           <Route exact path="/">
              <Register />
           </Route>
-           <Route path="/dashboard">           {/*to do create new names  */}
-              <DataTable />
+           <Route path="/dashboard">         
+              <Dashboard />
           </Route> 
-        
-           <Route path="/signin">           {/*to do create new names  */}
+            <Route path="/signin">          
               <SignIn />
           </Route>
-
-          <Route path="/analytics">           {/*to do create new names  */}
+          <Route path="/analytics">          
               <ExpenseChart />
           </Route>
         </Switch>

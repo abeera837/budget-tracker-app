@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom"; 
 import { Button, Table, Modal, Input, DatePicker } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { useHistory } from "react-router-dom"; // Import useHistory
-import "../Styles/DataTable.css";
 import Filtering from "./Filtering";
+import "../Styles/DataTable.css";
+
 
 const DataTable = () => {
 
@@ -28,7 +29,7 @@ const DataTable = () => {
     fetchData();
   }, []);
 
-  // Fetch data from the API
+  // Fetch data from the db
   const fetchData = () => {
     fetch("http://localhost:8000/dataSource")
       .then((response) => response.json())
@@ -39,15 +40,15 @@ const DataTable = () => {
    // Save a new data entry
   const saveData = (data) => {
     fetch("http://localhost:8000/dataSource", {
-      method: "POST",
+      method: "POST",     // to creat a new data entry
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((savedData) => {
-        setDataSource((prev) => [...prev, savedData]);
+      .then((savedData) => {    // after getting the data 
+        setDataSource((prev) => [...prev, savedData]);   // creates an array with the new data at the end
       })
       .catch((error) => console.error("Error adding data:", error));
   };
@@ -55,7 +56,7 @@ const DataTable = () => {
   // Update an existing data entry
   const updateData = (data) => {
     fetch(`http://localhost:8000/dataSource/${data.id}`, {
-      method: "PUT",
+      method: "PUT",   // for updating
       headers: {
         "Content-Type": "application/json",
       },
@@ -63,7 +64,8 @@ const DataTable = () => {
     })
       .then(() => {
         setDataSource((prev) =>
-          prev.map((item) => (item.id === data.id ? data : item))
+          prev.map((item) => (item.id === data.id ? data : item))   
+          //maped to new array if the value matches, then update
         );
       })
       .catch((error) => console.error("Error updating data:", error));
@@ -148,7 +150,7 @@ const DataTable = () => {
   // Save edited data
   const onSaveEdit = () => {
     const updatedData = {
-      ...editingData,
+      ...editingData,   // spread syntax: opies all properties and values from the editingData object into the updatedData object.
       date: editingData.date
         ? moment(editingData.date).format("DD-MM-YYYY")
         : null,
@@ -255,7 +257,7 @@ const DataTable = () => {
 
         <Modal 
           title={isEditing ? "Edit Data" : "Add Budget"}
-          visible={isAddModalVisible}
+          open={isAddModalVisible}
           onCancel={() => {
             setIsAddModalVisible(false);
             onCancelEdit();
@@ -267,17 +269,35 @@ const DataTable = () => {
             placeholder="Name"
             value={isEditing ? editingData.name : newData.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
+            rules={[
+              {
+                  required: true,
+                  message: "Required Field",
+              },
+          ]}
           />
           <Input
             placeholder="Price"
             value={isEditing ? editingData.price : newData.price}
             onChange={(e) => handleInputChange("price", e.target.value)}
+            rules={[
+              {
+                  required: true,
+                  message: "Required Field",
+              },
+          ]}
           />
           <DatePicker
             picker="date"
             value={isEditing ? editingData.date : newData.date}
             onChange={(date) => handleInputChange("date", date)}
             format="DD-MM-YYYY"
+            rules={[
+              {
+                  required: true,
+                  message: "Required Field",
+              },
+          ]}
           />
         </Modal>
 
